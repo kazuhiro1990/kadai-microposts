@@ -2,7 +2,7 @@
   <ul class="list-unstyle mt-2">
     <% microposts.each do |micropost| %>
       <li class="d-flex">
-        <img class="rounded me-2 mb-5" src="<%= gravatar_url(micropost.user, { size: 64})%>" alt="">
+        <img class="rounded me-2 mb-5 h-100" src="<%= gravatar_url(micropost.user, { size: 64})%>" alt="">
         <div>
           <div>
             <%= link_to micropost.user.name, user_path(micropost.user), class: "text-decoration-none" %> <span class="text-muted">posted at <%= micropost.created_at %></span>
@@ -10,11 +10,14 @@
           <div>
             <p><%= micropost.content %></p>
           </div>
-          <div>
-            <% if current_user == micropost.user %>
-              <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
-            <% end %>  
-          </div>
+         
+            <div class="btn-group">
+              <% if current_user == micropost.user %>
+                <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm me-2' %>
+              <% end %>  
+              <%= render 'favorites/favorite_button', micropost:micropost %>
+            </div>
+          
         </div>
       </li>
     <% end %>  
